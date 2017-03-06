@@ -10,19 +10,29 @@
 <?php
 
 include_once('navbar.php');
+include_once('dbconnect.php'); //connect to database
 
-$path = "users.txt"; //text file storing user registration info
-$handle = fopen($path, 'a'); //open path as write only, pointer at end of file
+//test connection to db
+if(mysqli_connect_errno()) {
+	die("Database connection failed: " . mysqli_connect_error() . " (" . mysqli_connect_errno() . ")");  
+}
 
-if (isset($_POST['submit'])) {
-	$data = $_POST["email"] . ", " . $_POST["username"] . ", " . $_POST["password"]; //concatenate user info. "required" fields already handled with html required=true
-	echo "<h1>Successfully registered!</h1>";
-	fwrite($handle, $data . "\r\n"); //write to file + new line
-	fclose($handle); //close file
+//check and filter user input
+$username = trim($_POST['username']);
+$email = trim($_POST['email']);
+$password = trim($_POST['password']);
+
+//add user to DB
+$query = "INSERT INTO users values('".$username."','".$email."','".$password."')";
+$result = mysqli_query($connection, $query);
+
+if($result) {
+	echo "Successfully registered!";
 }
 else {
-	echo "<h1>Registration failed! Please retry.</h1>";
+	die("Registration failed. " . mysqli_error($connection));
 }
+
 ?>
 
 </body>
