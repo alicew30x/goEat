@@ -20,7 +20,8 @@ if(mysqli_connect_errno()) {
 //check and filter user input
 $username = trim($_POST['username']);
 $email = trim($_POST['email']);
-$password = trim($_POST['password']);
+$pass = trim($_POST['password']);
+$password = hash('sha256', $pass); //password encryption
 
 //add user to DB
 $query = "INSERT INTO users values('".$username."','".$email."','".$password."')";
@@ -32,6 +33,7 @@ if($result) {
 else {
 	die("Registration failed. " . mysqli_error($connection));
 }
+
 
 ?>
 
