@@ -6,19 +6,23 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="css/custom.css">
 	<link href="https://fonts.googleapis.com/css?family=Unica+One" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
 </head>
 <body>
 
 <!-- include navbar -->
 <?php
 include_once('navbar.php');
-?>  
 
-<div class="container">
+@$username = $_POST['username'];
+@$password = $_POST['password'];
+
+if((!isset($username)) || (!isset($password))) {
+	?>
+	<div class="container">
 	<div class="form-container">
 		<h1>Sign in!</h1>
-		<form class="registration" action="form_processing.php" method="POST">
+		<form class="registration" action="basicAuth0.php" method="POST">
 			<label for="user-username">Username</label>
 			<input id="user-username" name="username" required="true" type="text">
 			<label for="user-password">Password</label>
@@ -27,6 +31,21 @@ include_once('navbar.php');
 		</form>
 	</div>
 </div>
+
+<?php
+}
+
+else if(($username=="user") && ($password=="pass")) {
+	echo "You're logged in now!"
+}
+
+else {
+	echo "Couldn't login! Check your username and password."
+}
+?>
+  
+
+
     
   </body>
 </html>
