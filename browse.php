@@ -13,7 +13,7 @@
 <!-- include navbar -->
 <?php
 include_once('navbar.php');
-?>  
+?>
 
 <!-- search filters
 TODO: collapsable filter (hidden to the left unless hover or click) -->
@@ -54,11 +54,19 @@ TODO: collapsable filter (hidden to the left unless hover or click) -->
 
 <div class="container">
 <!-- searchbar -->
-<input id="searchbar" type="text" name="search" placeholder="Search for foooooood...">
+<form action="search.php" method="GET">
+	<input id="searchbar" type="text" name="query" placeholder="Search for foooooood..."/>
+	<input type="submit" value="search!"/>
+</form>
+</div>
+
+
+
+
 
 <!-- listing results
 TODO: add star ratings -->
-	<div class="listing">
+<!-- 	<div class="listing">
 		<img class="listing-pic" src="img/listing-placeholder.png" alt="listing placeholder">
 		<div class="listing-text">
 			<h2 class="listing-title"><a href="listing.php" alt="Japadog">Japadog</a></h2>
@@ -101,7 +109,7 @@ TODO: add star ratings -->
 		<h3 class="listing-desc">Asian</h3>
 		<h4 class="location">W Georgia & Smithe</h4>
 	</div>
-</div>
+</div> -->
     
   </body>
 </html>
