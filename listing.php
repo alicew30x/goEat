@@ -11,33 +11,47 @@
 <body>
 <?php
 include_once('navbar.php');
-?>  
-<div class="container">
-	<section class="listing-detail">
-		<img src="img/japadog.jpg">
+include_once('dbconnect.php');
+
+$vendorkey = $_GET['id']; //get vendor key from url
+$query = "SELECT * FROM `vendors` WHERE `KEY`='$vendorkey'"; 
+$raw_results = mysqli_query($connection, $query);
+$result = mysqli_fetch_array($raw_results);
+
+$vendorname = $result['BUSINESS_NAME'];
+$vendortype = $result['DESCRIPTION'];
+$status = $result['STATUS'];
+$location = $result['LOCATION'];
+
+echo "<div class='container'>
+	<section class='listing-detail'>
+		<img src='img/japadog.jpg'>
 		<!-- TODO: add image carousel -->
-		<h1>Japadog</h1>
-		<h3>Hotdogs</h3>
-		<h4>3498 Pender Street</h4>
+		<h1>".$vendorname."</h1>
+		<h3>".$vendortype."</h3>
+		<h4>".$location."</h4>
 		<p>
 		Japadog is a small chain of street food stands and restaurants located in Vancouver. The chain, which specializes in hot dogs that include variants of Japanese-style foods like okonomiyaki, yakisoba, teriyaki and tonkatsu, is owned by Noriki Tamura.
 		</p>
 
 
 		<!-- TODO: add rating stars, fix positioning -->
-		<section class="reviews">
+		<section class='reviews'>
 			<h2>Reviews</h2>
-			<div class="user-review">
+			<div class='user-review'>
 				<h3>User123</h3>
 				<p>Decent hot dogs. These are some good hot dogs.</p>
 			</div>
-			<div class="user-review">
+			<div class='user-review'>
 				<h3>Bunnydust</h3>
 				<p>10/10 would buy again.</p>
 			</div>
 		</section>
 	</section>
-</div>
+</div>";
+
+?>  
+
     
   </body>
 </html>

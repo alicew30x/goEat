@@ -29,24 +29,30 @@ if($_GET) {
 
 	// handle results
 	if($raw_results->num_rows > 0) {
+		//show searchbar
 		echo "<div class='container'>
 				<form action='' method='GET' class='form-wrapper'>
 					<input id='searchbar' type='text' name='query' placeholder='Search for foooooood...'/>
 					<button class='btn' type='submit'>Search!</button>
 				</form>
 			</div>";
+
+		//display results
 		while($row = $raw_results->fetch_assoc()) {
+			$vendorkey = $row['KEY'];
 			$vendorname = $row['BUSINESS_NAME'];
 			$vendortype = $row['DESCRIPTION'];
-			if(empty($vendorname)) {
+			//not all listings in database have a business name (i.e random hot dog stands) - use vendortype if business name does not exist
+			if(empty($vendorname)) { 
 				$vendorname = $vendortype;
 			}
 			$location = $row['LOCATION'];
-			
+
+			//display each listing from result set, generate unique link for each listing using vendor id
 			echo "<div class='listing'>
 			<img class='listing-pic' src='img/listing-placeholder.png' alt='listing placeholder'>
 			<div class='listing-text'>
-				<h2 class='listing-title'><a href='listing.php' alt=".$vendorname.">".$vendorname."</a></h2>
+				<h2 class='listing-title'><a href='listing.php?id=". $vendorkey."' alt=".$vendorname.">".$vendorname."</a></h2> 
 				<h3 class='listing-desc'>".$vendortype."</h3>
 				<h4 class='location'>".$location."</h4>
 			</div></div>";
@@ -59,7 +65,7 @@ if($_GET) {
 					<button class='btn' type='submit'>Search!</button>
 				</form>
 			</div>";
-		echo "<h2> No results. </h2>";
+		echo "<div class='container'><h2> No results. </h2></div>";
 	}
 }
 else {
