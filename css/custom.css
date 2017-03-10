@@ -265,6 +265,15 @@ input {
   margin-top: 1em;
 }
 
+.btn {
+  border: 0;
+  background: #2d2d2d;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  -webkit-appearance: none;
+}
+
 
 #searchbar[type=text] {
   width: 60%;
@@ -341,3 +350,4 @@ fieldset {
   border-bottom: 1px solid #6c6c6c;
   padding-bottom: 1em;
 }
+

@@ -17,34 +17,53 @@ include_once('navbar.php');
 if($_GET) {
 	include_once('dbconnect.php');
 
-$searchterm = $_GET['query']; // get search term from searchbar
-$searchterm = htmlspecialchars($searchterm); //convert html special chars to equivalent
+	$searchterm = $_GET['query']; // get search term from searchbar
+	$searchterm = htmlspecialchars($searchterm); //convert html special chars to equivalent
 
-//Keyword search from vendor database. Searches for both business names and food type
-$query = "SELECT * FROM vendors WHERE (BUSINESS_NAME LIKE '%". $searchterm ."%') OR (DESCRIPTION LIKE '%" . $searchterm . "%')";
+	//Keyword search from vendor database. Searches for both business names and food type
+	$query = "SELECT * FROM vendors WHERE (BUSINESS_NAME LIKE '%". $searchterm ."%') OR (DESCRIPTION LIKE '%" . $searchterm . "%')";
 
-//search for results in vendor name or vendor type
-$raw_results = mysqli_query($connection, $query);
-$num_results = mysqli_num_rows($raw_results);
+	//search for results in vendor name or vendor type
+	$raw_results = mysqli_query($connection, $query);
+	$num_results = mysqli_num_rows($raw_results);
 
-// handle results
-if($raw_results->num_rows > 0) {
-	while($row = $raw_results->fetch_assoc()) {
-		$vendorname = $row['BUSINESS_NAME'];
-		$vendortype = $row['DESCRIPTION'];
-		$location = $row['LOCATION'];
-		echo "<div class='listing'>
-		<img class='listing-pic' src='img/listing-placeholder.png' alt='listing placeholder'>
-		<div class='listing-text'>
-			<h2 class='listing-title'><a href='listing.php' alt=".$vendorname.">".$vendorname."</a></h2>
-			<h3 class='listing-desc'>".$vendortype."</h3>
-			<h4 class='location'>".$location."</h4>
-		</div></div>";
+	// handle results
+	if($raw_results->num_rows > 0) {
+		echo "<div class='container'>
+				<form action='' method='GET' class='form-wrapper'>
+					<input id='searchbar' type='text' name='query' placeholder='Search for foooooood...'/>
+					<button class='btn' type='submit'>Search!</button>
+				</form>
+			</div>";
+		while($row = $raw_results->fetch_assoc()) {
+			$vendorname = $row['BUSINESS_NAME'];
+			$vendortype = $row['DESCRIPTION'];
+			if(empty($vendorname)) {
+				$vendorname = $vendortype;
+			}
+			$location = $row['LOCATION'];
+			
+			echo "<div class='listing'>
+			<img class='listing-pic' src='img/listing-placeholder.png' alt='listing placeholder'>
+			<div class='listing-text'>
+				<h2 class='listing-title'><a href='listing.php' alt=".$vendorname.">".$vendorname."</a></h2>
+				<h3 class='listing-desc'>".$vendortype."</h3>
+				<h4 class='location'>".$location."</h4>
+			</div></div>";
+		}
+	}
+	else {
+		echo "<div class='container'>
+				<form action='' method='GET' class='form-wrapper'>
+					<input id='searchbar' type='text' name='query' placeholder='Search for foooooood...'/>
+					<button class='btn' type='submit'>Search!</button>
+				</form>
+			</div>";
+		echo "<h2> No results. </h2>";
 	}
 }
 else {
-	echo "<h2> No results. </h2>";
-}
+
 }
 ?>
 
@@ -87,62 +106,11 @@ TODO: collapsable filter (hidden to the left unless hover or click) -->
 
 <div class="container">
 <!-- searchbar -->
-<form action="" method="GET">
+<form action="" method="GET" class="form-wrapper">
 	<input id="searchbar" type="text" name="query" placeholder="Search for foooooood..."/>
-	<input type="submit" value="search!"/>
+	<button class="btn" type="submit">Search!</button>
 </form>
 </div>
-
-
-
-
-
-<!-- listing results
-TODO: add star ratings -->
-<!-- 	<div class="listing">
-		<img class="listing-pic" src="img/listing-placeholder.png" alt="listing placeholder">
-		<div class="listing-text">
-			<h2 class="listing-title"><a href="listing.php" alt="Japadog">Japadog</a></h2>
-			<h3 class="listing-desc">Hotdogs</h3>
-			<h4 class="location">3498 Pender Street</h4>
-		</div>
-	</div>
-
-	<div class="listing">
-		<img class="listing-pic" src="img/listing-placeholder.png" alt="listing placeholder">
-		<h2 class="listing-title"><a href="listing.php">Pressure Box</a></h2>
-		<h3 class="listing-desc">Random cuisine</h3>
-		<h4 class="location">Terminal Avenue</h4>
-	</div>
-
-	<div class="listing">
-		<img class="listing-pic" src="img/listing-placeholder.png" alt="listing placeholder">
-		<h2 class="listing-title"><a href="listing.php">Tandoori Tikka Box</a></h2>
-		<h3 class="listing-desc">Hotdogs</h3>
-		<h4 class="location">W Cordova Street</h4>
-	</div>
-
-	<div class="listing">
-		<img class="listing-pic" src="img/listing-placeholder.png" alt="listing placeholder">
-		<h2 class="listing-title"><a href="listing.php">Loving Hut</a></h2>
-		<h3 class="listing-desc">Vegan sandwiches and burgers</h3>
-		<h4 class="location">Pacific Blvd & Davie Street</h4>
-	</div>
-
-	<div class="listing">
-		<img class="listing-pic" src="img/listing-placeholder.png" alt="listing placeholder">
-		<h2 class="listing-title"><a href="listing.php">Chickpea Truck</a></h2>
-		<h3 class="listing-desc">Vegetarian food</h3>
-		<h4 class="location">33 Acres Brewing Company</h4>
-	</div>
-
-	<div class="listing">
-		<img class="listing-pic" src="img/listing-placeholder.png" alt="listing placeholder">
-		<h2 class="listing-title"><a href="listing.php">Roaming Dragon</a></h2>
-		<h3 class="listing-desc">Asian</h3>
-		<h4 class="location">W Georgia & Smithe</h4>
-	</div>
-</div> -->
     
   </body>
 </html>
