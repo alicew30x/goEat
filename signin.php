@@ -21,6 +21,7 @@ if(!isset($_SESSION['valid_user'])) {
 		$username=$_POST['username'];
 		$pass=$_POST['password'];
 		$password=hash('sha256', $pass);
+		echo $password;
 		$query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
 		$result=mysqli_query($connection, $query);
 		$count = mysqli_num_rows($result);

@@ -13,6 +13,39 @@
 <!-- include navbar -->
 <?php
 include_once('navbar.php');
+
+if($_GET) {
+	include_once('dbconnect.php');
+
+$searchterm = $_GET['query']; // get search term from searchbar
+$searchterm = htmlspecialchars($searchterm); //convert html special chars to equivalent
+
+//Keyword search from vendor database. Searches for both business names and food type
+$query = "SELECT * FROM vendors WHERE (BUSINESS_NAME LIKE '%". $searchterm ."%') OR (DESCRIPTION LIKE '%" . $searchterm . "%')";
+
+//search for results in vendor name or vendor type
+$raw_results = mysqli_query($connection, $query);
+$num_results = mysqli_num_rows($raw_results);
+
+// handle results
+if($raw_results->num_rows > 0) {
+	while($row = $raw_results->fetch_assoc()) {
+		$vendorname = $row['BUSINESS_NAME'];
+		$vendortype = $row['DESCRIPTION'];
+		$location = $row['LOCATION'];
+		echo "<div class='listing'>
+		<img class='listing-pic' src='img/listing-placeholder.png' alt='listing placeholder'>
+		<div class='listing-text'>
+			<h2 class='listing-title'><a href='listing.php' alt=".$vendorname.">".$vendorname."</a></h2>
+			<h3 class='listing-desc'>".$vendortype."</h3>
+			<h4 class='location'>".$location."</h4>
+		</div></div>";
+	}
+}
+else {
+	echo "<h2> No results. </h2>";
+}
+}
 ?>
 
 <!-- search filters
@@ -54,7 +87,7 @@ TODO: collapsable filter (hidden to the left unless hover or click) -->
 
 <div class="container">
 <!-- searchbar -->
-<form action="search.php" method="GET">
+<form action="" method="GET">
 	<input id="searchbar" type="text" name="query" placeholder="Search for foooooood..."/>
 	<input type="submit" value="search!"/>
 </form>
