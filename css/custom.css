@@ -11,6 +11,10 @@ body {
   margin: 0;
 }
 
+.center {
+  text-align: center;
+}
+
 h1, h2 {
   font-family: 'Unica One', sans-serif;
 }
@@ -214,6 +218,13 @@ ul.primary li:hover > a{
   height: 80vh;
 }
 
+.listing-map {
+  width: 45% !important;
+  height: 300px !important;
+  float: right;
+  margin-top: 2em;
+}
+
 .center {
   text-align: center;
 }
@@ -343,7 +354,9 @@ fieldset {
   padding: 2em 2em;
   margin-top: 2em;
   width: 30%;
-  float: right;
+  height: 22vh;
+  overflow: auto;
+  float: left;
 }
 
 .reviews p {

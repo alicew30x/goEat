@@ -13,10 +13,9 @@
 <!-- include navbar -->
 <?php
 include_once('navbar.php');
+include_once('dbconnect.php');
 
 if($_GET) {
-	include_once('dbconnect.php');
-
 	$searchterm = $_GET['query']; // get search term from searchbar
 	$searchterm = htmlspecialchars($searchterm); //convert html special chars to equivalent
 
@@ -69,7 +68,41 @@ if($_GET) {
 	}
 }
 else {
+	//display all vendors by default, 20 per page
+	//todo: pagination
+	$query = "SELECT * FROM vendors LIMIT 50";
+	$raw_results = mysqli_query($connection, $query);
+	$num_results = mysqli_num_rows($raw_results);
 
+	echo "<div class='container'>
+				<form action='' method='GET' class='form-wrapper'>
+					<input id='searchbar' type='text' name='query' placeholder='Search for foooooood...'/>
+					<button class='btn' type='submit'>Search!</button>
+				</form>
+			</div>";
+
+		//display results
+		while($row = $raw_results->fetch_assoc()) {
+			$vendorkey = $row['KEY'];
+			$vendorname = $row['BUSINESS_NAME'];
+			$vendortype = $row['DESCRIPTION'];
+			//not all listings in database have a business name (i.e random hot dog stands) - use vendortype if business name does not exist
+			if(empty($vendorname)) { 
+				$vendorname = $vendortype;
+			}
+			$location = $row['LOCATION'];
+
+			//display each listing from result set, generate unique link for each listing using vendor id
+			echo "<div class='listing'>
+			<img class='listing-pic' src='img/listing-placeholder.png' alt='listing placeholder'>
+			<div class='listing-text'>
+				<h2 class='listing-title'><a href='listing.php?id=". $vendorkey."' alt=".$vendorname.">".$vendorname."</a></h2> 
+				<h3 class='listing-desc'>".$vendortype."</h3>
+				<h4 class='location'>".$location."</h4>
+			</div></div>";
+
+			//TODO: favourite button with ajax
+		}
 }
 ?>
 

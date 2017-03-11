@@ -32,7 +32,7 @@ if(!isset($_SESSION['valid_user'])) {
 		// 	$_SESSION['valid_user'] = $_POST['userid'];
 		// }
 		else{
-			echo "<h1>invalid login info, please try again.</h1>";
+			echo "<h1 class='center'>invalid login info, please try again.</h1>";
 		}
 	}
 	else {
@@ -40,7 +40,7 @@ if(!isset($_SESSION['valid_user'])) {
 	}
 }
 else {
-	echo "<h1>you are now logged in as user: ".$_SESSION['valid_user'];
+	echo "<h1 class='center'>you are now logged in as user: ".$_SESSION['valid_user'];
 	exit();
 }
 	?>
