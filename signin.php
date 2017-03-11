@@ -21,16 +21,13 @@ if(!isset($_SESSION['valid_user'])) {
 		$username=$_POST['username'];
 		$pass=$_POST['password'];
 		$password=hash('sha256', $pass);
-		echo $password;
 		$query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
 		$result=mysqli_query($connection, $query);
 		$count = mysqli_num_rows($result);
 		if($count==1){
 			$_SESSION['valid_user'] = $_POST['username'];
 		}
-		// if($_POST['userid']=="test" && $_POST['password']=="test") {
-		// 	$_SESSION['valid_user'] = $_POST['userid'];
-		// }
+
 		else{
 			echo "<h1 class='center'>invalid login info, please try again.</h1>";
 		}

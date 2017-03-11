@@ -22,8 +22,8 @@ $vendorname = $result['BUSINESS_NAME'];
 $vendortype = $result['DESCRIPTION'];
 $status = $result['STATUS'];
 $location = $result['LOCATION'];
-$latitude = $result['LAT'];
-$longitude = $result['LON'];
+$latitude = $result['LAT']; //for displaying map marker
+$longitude = $result['LON']; //for displaying map marker
 
 echo "<div class='container'>
 	<section class='listing-detail'>
@@ -35,7 +35,6 @@ echo "<div class='container'>
 		<p>
 		Japadog is a small chain of street food stands and restaurants located in Vancouver. The chain, which specializes in hot dogs that include variants of Japanese-style foods like okonomiyaki, yakisoba, teriyaki and tonkatsu, is owned by Noriki Tamura.
 		</p>
-
 		<div id='map' class='listing-map'></div>
 		<script>
       function initMap() {
@@ -53,7 +52,6 @@ echo "<div class='container'>
     <script async defer
     src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAIGVnZ6CQYTAmHZavM5vWkckho3TBa1cM&callback=initMap'>
     </script>
-    
 
 
 		<!-- TODO: add rating stars, fix positioning -->
